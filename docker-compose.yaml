@@ -1,0 +1,12 @@
+version: "3.8"
+
+services:
+  desafio-conceitos-nodejs:
+    build: .
+    container_name: desafio-conceitos-nodejs   
+    volumes:
+      - ./:/home/node/app   
+    ports:
+      - "3333:3333"
+    restart: always
+    tty: true
