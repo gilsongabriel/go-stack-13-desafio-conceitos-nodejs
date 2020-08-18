@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const { uuid } = require("uuidv4");
 const app = express();
+const uuidValidator = require("./middlewares/uuidValidator");
 
 app.use(express.json());
 app.use(cors());
@@ -22,7 +23,7 @@ app.post("/repositories", (request, response) => {
   return response.status(201).json(repository);
 });
 
-app.put("/repositories/:id", (request, response) => {
+app.put("/repositories/:id", uuidValidator, (request, response) => {
   const { id } = request.params;
   const { title, url, techs } = request.body;
   const repositoryIndex = repositories.findIndex(repository => repository.id === id);
@@ -39,7 +40,7 @@ app.put("/repositories/:id", (request, response) => {
   return response.status(202).json(repository);
 });
 
-app.delete("/repositories/:id", (request, response) => {
+app.delete("/repositories/:id", uuidValidator, (request, response) => {
   const { id } = request.params;
   const repositoryIndex = repositories.findIndex(repository => repository.id === id);
 
@@ -52,7 +53,7 @@ app.delete("/repositories/:id", (request, response) => {
   return response.status(204).send();
 });
 
-app.post("/repositories/:id/like", (request, response) => {
+app.post("/repositories/:id/like", uuidValidator, (request, response) => {
   const { id } = request.params;
   const repositoryIndex = repositories.findIndex(repository => repository.id === id);
 
